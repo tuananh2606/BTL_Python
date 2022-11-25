@@ -1,0 +1,37 @@
+{% extends 'base.html' %} 
+{% load static crispy_forms_tags %} 
+{% block content %}
+<div class="container">
+	<div class="row mb-3">
+		<a
+			class="btn btn-sm btn-outline-success mx-1"
+			type="button"
+			href="{% url 'videos:videoset_create_url' %}"
+			>Create videoset</a
+		>
+	</div>
+	<div class="row">
+		{% if object_list is None %}
+		<h1>None</h1>
+		{% else %} {% for videoset in object_list %}
+		<div class="card mb-3">
+			<div class="card-header">
+				<a href="{% url 'videos:videoset_detail_url' videoset.id %}"
+					>{{ videoset }}</a
+				>
+			</div>
+			<div class="card-body">
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item">
+						<b>Uploaded by</b>: {{ videoset.user|capfirst }}
+					</li>
+					<li class="list-group-item">
+						<b>Total videos</b>: {{ videoset.videos.count }}
+					</li>
+				</ul>
+			</div>
+		</div>
+		{% endfor %} {% endif %}
+	</div>
+</div>
+{% endblock content %}

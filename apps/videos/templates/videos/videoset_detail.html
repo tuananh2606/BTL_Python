@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %} 
+	{{ videoset.name }} - ImageSet 
+{% endblock title %} 
+{% block content %}
+<div class="col-md-10 mx-4">
+	<div class="card">
+		<div class="card-header">{{ videoset.name|capfirst }} - Video set</div>
+		<div class="card-body">
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item">
+					<b>Uploaded by</b>: {{ videoset.user|capfirst }}
+				</li>
+				<li class="list-group-item">
+					<b>Total videos</b>: {{ videoset.videos.count }}
+				</li>
+				<li class="list-group-item">
+					<b>Description</b>: {{ videoset.description }}
+				</li>
+			</ul>
+			<a
+				href="{% url 'videos:upload_videos_url' videoset.id %}"
+				class="btn btn-outline-info btn-sm"
+				>Upload videos</a
+			>
+			<a
+				href="{% url 'videos:videoset_update_url' videoset.id %}"
+				class="btn btn-outline-info btn-sm"
+				>Update VideoSet</a
+			>
+			<a
+				href="{% url 'videos:videoset_delete_url' videoset.id %}"
+				class="btn btn-outline-info btn-sm"
+				>Delete VideoSet</a
+			>
+			{% if videoset.videos.count > 0 %}
+			<a
+				href="{% url 'videos:videos_list_url' videoset.id %}"
+				class="btn btn-outline-info btn-sm"
+				>View Videos</a
+			>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endblock content %} 
+{% block shared_data %} 
+	{{orig_video.id|json_script:"videoId" }} 
+{% endblock shared_data %}

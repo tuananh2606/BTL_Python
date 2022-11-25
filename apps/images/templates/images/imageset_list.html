@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static crispy_forms_tags %}
+
+
+{% block content %}
+<div class="container">
+    <div class="row mb-3">
+        <a class="btn btn-sm btn-outline-success mx-1" type="button" href="{% url 'images:imageset_create_url' %}">Create imageset</a>
+    </div>
+    <div class="row">
+        {% if object_list is None %}
+            <h1>None</h1>
+        {% else %}
+            {% for imgset in object_list %}
+            <div class="card mb-3">
+                <div class="card-header">
+                    <a href="{% url 'images:imageset_detail_url' imgset.id %}">{{ imgset }}</a>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><b>Uploaded by</b>: {{ imgset.user|capfirst }}</li>
+                        <li class="list-group-item"><b>Total images</b>: {{ imgset.images.count }}</li>
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

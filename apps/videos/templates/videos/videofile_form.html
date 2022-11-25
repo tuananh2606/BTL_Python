@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static crispy_forms_tags %} 
+{% block on_page_css %}
+<link
+	rel="stylesheet"
+	type="text/css"
+	href="{% static 'css/basic.min.css' %}"
+/>
+<link
+	rel="stylesheet"
+	type="text/css"
+	href="{% static 'css/dropzone.min.css' %}"
+/>
+{% endblock on_page_css %} 
+{% block title %} {{videoset.name|capfirst}} - Videos upload {% endblock title %} 
+{% block content %}
+
+<div class="col-md-11 mx-4">
+	<h4 class="mb-4">
+		Upload videos to {{ videoset.name|capfirst }} video set.
+	</h4>
+	<form
+		action="{% url 'videos:upload_videos_url' videoset.id %}"
+		method="post"
+		enctype="multipart/form-data"
+	>
+		{% csrf_token %}
+		<input name="file" type="file" />
+		<button id="imagesUploadBtn" type="submit" class="btn btn-sm btn-outline-info mt-2" >
+			Submit
+		</button>
+	</form>
+	<!-- <form action="/file-upload" class="dropzone">
+            <div class="fallback">
+              <input name="file" type="file" multiple />
+            </div>
+        </form> -->
+	<a class="btn btn-primary" style="width:200px" href="{% url 'videos:videos_list_url' videoset.id %}">Go Video List</a>
+</div>
+{% endblock content %} 
+{% block on_page_js %}
+<!-- <script src="{% static 'js/dropzone.min.js' %}"></script> -->
+<!-- <script src="{% static 'js/custom.js' %}"></script> -->
+
+{% endblock on_page_js %}
