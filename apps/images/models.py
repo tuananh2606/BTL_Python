@@ -40,7 +40,6 @@ class ImageSet(models.Model):
 
 def imageset_upload_images_path(instance, filename):
     return f'{instance.image_set.dirpath}/images/{filename}'
-# {instance.image_set.dirpath}
 
 class ImageFile(models.Model):
     name = models.CharField(_('Image Name'), max_length=150, null=True)

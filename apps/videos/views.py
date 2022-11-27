@@ -44,7 +44,7 @@ class VideoSetUpdateView(UpdateView):
             form.add_error(
                 'name',
                 f"Videoset with name {form.cleaned_data['name']} already exists in dataset. \
-                     Add more images to that imageset, if required."
+                     Add more videos to that videoset, if required."
             )
             context = {
                 'form': form
@@ -52,7 +52,7 @@ class VideoSetUpdateView(UpdateView):
             return render(self.request, 'videos/videoset_form.html', context)
 
     def get_success_url(self):
-        return reverse('images:imageset_detail_url', kwargs={'pk': self.object.id})
+        return reverse('videos:videoset_detail_url', kwargs={'pk': self.object.id})
 
 
 class VideoSetListView(ListView):
@@ -88,20 +88,13 @@ class VideosUploadView(View):
                 video = VideoFile(name=f.name, video=f, video_set=videoset)
                 video.save()
 
-            message = f"Uploading videos to the Imageset: {videoset}. \
+            message = f"Uploading videos to the Videoset: {videoset}. \
                 Automatic redirect to the images list after completion."
 
             redirect_to = reverse_lazy(
                 "videos:videos_list_url", args=[videoset_id])
-            return JsonResponse({"result": "result",
-                                "message": message,
-                                 "redirect_to": redirect_to,
-                                 "files_length": len(videos),
-                                 },
-                                status=200,
-                                content_type="application/json"
-                                )
 
+            return redirect(redirect_to)
 
 class VideosListView(ListView):
     model = VideoFile

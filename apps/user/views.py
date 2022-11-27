@@ -25,18 +25,6 @@ def add_webcam():
 
             yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + image_bytes + b'\r\n')
-            # cv2.imshow("Capturing", frame)
-            key = cv2.waitKey(1)
-            if key == ord('s'): 
-                cv2.imwrite(filename='saved_img.jpg', img=frame)
-                cap.release()
-                cv2.destroyAllWindows()
-                break
-            
-            elif key == ord('q'):
-                cap.release()
-                cv2.destroyAllWindows()
-                break
     
         except(KeyboardInterrupt):
             print("Turning off camera.")
@@ -51,6 +39,7 @@ def video_login(request):
     return StreamingHttpResponse(add_webcam(), content_type='multipart/x-mixed-replace; boundary=frame')   
 
 students = Student.objects.all()
+print(students)
 
 path_parent = Path(f'{students[0]}')
 
@@ -73,7 +62,6 @@ def handle_login(request):
     if name in ['unknown_person', 'no_persons_found']:
         os.remove(unknown_img_path)
         return render(request, "user/message.html")
-        # return HttpResponseRedirect('/login')
     else:
         os.remove(unknown_img_path)
         return HttpResponseRedirect("/")

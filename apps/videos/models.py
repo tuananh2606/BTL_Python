@@ -30,6 +30,9 @@ class VideoSet(models.Model):
     def get_absolute_url(self):
         return reverse("videos:videoset_detail_url", kwargs={"pk": self.pk})
 
+    def get_delete_url(self):
+        return reverse("videos:videoset_list_url", kwargs={})
+
 
 def videoset_upload_videos_path(instance, filename):
     return f'{instance.video_set.dirpath}/videos/{filename}'
